@@ -6,21 +6,16 @@ public class TaskManager {
     List<ITask> taskList = new ArrayList<>();
 
     public void addTask(ITask task) {
-        if (task.getId() >= 0) {
             taskList.add(task);
             System.out.println("Task added");
-
-        } else {
-            System.out.println("Error while adding the task: (Task already exists or must be positive)");
-        }
     }
 
     public boolean deleteTask(int id) {
         if (taskList.removeIf(a -> a.getId() == id)) {
-            System.out.println("Task removed");
+            System.out.println("Task deleted!");
             return true;
         } else {
-            System.out.println("Task not found");
+            System.out.println("Task not found!");
             return false;
         }
     }
@@ -48,7 +43,7 @@ public class TaskManager {
         if (exists) {
             System.out.println("ID already exists!");
         return exists;
-        } else if (id < 1) {
+        } else if (id < 0) {
             System.out.println("ID must be positive!");
             return true;
         }

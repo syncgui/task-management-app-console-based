@@ -119,6 +119,7 @@ public class Main {
                 }
             }
         }
+        System.out.println("Exiting program!");
         scanner.close();
     }
 
