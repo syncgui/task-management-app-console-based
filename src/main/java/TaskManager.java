@@ -6,8 +6,8 @@ public class TaskManager {
     List<ITask> taskList = new ArrayList<>();
 
     public void addTask(ITask task) {
-            taskList.add(task);
-            System.out.println("Task added");
+        taskList.add(task);
+        System.out.println("Task added");
     }
 
     public boolean deleteTask(int id) {
@@ -42,7 +42,7 @@ public class TaskManager {
         boolean exists = taskList.stream().anyMatch(a -> a.getId() == id);
         if (exists) {
             System.out.println("ID already exists!");
-        return exists;
+            return true;
         } else if (id < 0) {
             System.out.println("ID must be positive!");
             return true;

@@ -22,7 +22,7 @@ public class Main {
                                     
                     Choose a option by typing the corresponding number:
                     """);
-            option = scanner.nextInt();
+            option = askForIntegerChoice();
 
             switch (option) {
                 case 1 -> { // add new task
@@ -31,14 +31,13 @@ public class Main {
                             1. Work task
                             2. Home task
                             """);
-                    int innerOption = scanner.nextInt();
+                    int innerOption = askForIntegerChoice();
 
                     if (innerOption == 1) { // if user choose work task
                         int id = askForId();
                         while (taskManager.idExistsOrBelowOne(id)) {
                             id = askForId();
                         }
-                        scanner.nextLine();
 
                         System.out.print("Enter the task title: ");
                         String title = scanner.nextLine();
@@ -48,20 +47,20 @@ public class Main {
 
                         System.out.println("Choose the task type: ");
                         EnumWorkType.printValues();
-                        int workTypeOption = scanner.nextInt();
+                        int workTypeOption = askForIntegerChoice();
                         EnumWorkType workTypeOptionSelected = EnumWorkType.values()[workTypeOption];
 
                         System.out.println("Choose the task priority: ");
                         EnumPriority.printValues();
-                        int priorityOption = scanner.nextInt();
+                        int priorityOption = askForIntegerChoice();
                         EnumPriority workPriorityOptionSelected = EnumPriority.values()[priorityOption];
 
                         System.out.println("Choose the task reporter: ");
                         EnumWorkReporter.printValues();
-                        int reporterOption = scanner.nextInt();
+                        int reporterOption = askForIntegerChoice();
                         EnumWorkReporter workReporterOptionSelected = EnumWorkReporter.values()[reporterOption];
 
-                        WorkTask workTask = new WorkTask(id, title, description,
+                        ITask workTask = new WorkTask(id, title, description,
                                 workTypeOptionSelected, workPriorityOptionSelected, workReporterOptionSelected);
 
                         taskManager.addTask(workTask);
@@ -80,20 +79,20 @@ public class Main {
 
                         System.out.println("Choose the task type: ");
                         EnumHomeType.printValues();
-                        int homeTypeOption = scanner.nextInt();
+                        int homeTypeOption = askForIntegerChoice();
                         EnumHomeType homeTypeOptionSelected = EnumHomeType.values()[homeTypeOption];
 
                         System.out.println("Choose the room for this task: ");
                         EnumHomeRoom.printValues();
-                        int homeRoomOption = scanner.nextInt();
+                        int homeRoomOption = askForIntegerChoice();
                         EnumHomeRoom homeRoomOptionSelected = EnumHomeRoom.values()[homeRoomOption];
 
                         System.out.println("Choose the task priority: ");
                         EnumPriority.printValues();
-                        int priorityOption = scanner.nextInt();
+                        int priorityOption = askForIntegerChoice();
                         EnumPriority homePriorityOptionSelected = EnumPriority.values()[priorityOption];
 
-                        HomeTask homeTask = new HomeTask(id, title, description,
+                        ITask homeTask = new HomeTask(id, title, description,
                                 homeTypeOptionSelected, homeRoomOptionSelected, homePriorityOptionSelected);
 
                         taskManager.addTask(homeTask);
@@ -114,9 +113,7 @@ public class Main {
                         id = askForId();
                     }
                 }
-                case 4 -> { // list all tasks
-                    taskManager.getAllTasks();
-                }
+                case 4 -> taskManager.getAllTasks(); // list all tasks
             }
         }
         System.out.println("Exiting program!");
@@ -125,6 +122,17 @@ public class Main {
 
     private static int askForId() {
         System.out.print("Enter the task identifier: ");
-        return scanner.nextInt();
+        return askForIntegerChoice();
+    }
+
+    private static int askForIntegerChoice() {
+        try {
+            String number = scanner.nextLine();
+            return Integer.parseInt(number);
+        } catch (NumberFormatException e) {
+            System.out.println();
+            System.out.print("Invalid input. Please enter a number: ");
+            return askForIntegerChoice();
+        }
     }
 }
